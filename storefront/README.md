@@ -18,18 +18,18 @@
 
 #4) Who lives at "6439 Zetta Hills, Willmouth, WY"? Do they have another address?
 
-[4] pry(main)> Address.where(street: "6439 Zetta Hills")
+`[4] pry(main)> Address.where(street: "6439 Zetta Hills")
   Address Load (0.2ms)  SELECT "addresses".* FROM "addresses" WHERE "addresses"."street" = ?  [["street", "6439 Zetta Hills"]]
-=> [#<Address:0x007ff69fe3bc80 id: 43, user_id: 40, street: "6439 Zetta Hills", city: "Willmouth", state: "WY", zip: 15029>]
+=> [#<Address:0x007ff69fe3bc80 id: 43, user_id: 40, street: "6439 Zetta Hills", city: "Willmouth", state: "WY", zip: 15029>]`
 
-[5] pry(main)> User.where(id: "40")
+`[5] pry(main)> User.where(id: "40")
   User Load (0.2ms)  SELECT "users".* FROM "users" WHERE "users"."id" = ?  [["id", 40]]
-=> [#<User:0x007ff69fd33a90 id: 40, first_name: "Corrine", last_name: "Little", email: "rubie_kovacek@grimes.net">]
+=> [#<User:0x007ff69fd33a90 id: 40, first_name: "Corrine", last_name: "Little", email: "rubie_kovacek@grimes.net">]`
 
-[6] pry(main)> Address.joins(:user).where('users.first_name' => 'Corrine', 'users.last_name' => 'Little')
+`[6] pry(main)> Address.joins(:user).where('users.first_name' => 'Corrine', 'users.last_name' => 'Little')
   Address Load (0.4ms)  SELECT "addresses".* FROM "addresses" INNER JOIN "users" ON "users"."id" = "addresses"."user_id" WHERE "users"."first_name" = ? AND "users"."last_name" = ?  [["first_name", "Corrine"], ["last_name", "Little"]]
 => [#<Address:0x007ff69fb19958 id: 43, user_id: 40, street: "6439 Zetta Hills", city: "Willmouth", state: "WY", zip: 15029>,
- #<Address:0x007ff69fb493b0 id: 44, user_id: 40, street: "54369 Wolff Forges", city: "Lake Bryon", state: "CA", zip: 31587>]
+ #<Address:0x007ff69fb493b0 id: 44, user_id: 40, street: "54369 Wolff Forges", city: "Lake Bryon", state: "CA", zip: 31587>]`
 
 #5 Correct Virginie Mitchell's address to "New York, NY, 10108".
 
@@ -53,7 +53,13 @@
    (0.3ms)  SELECT SUM("items"."price") FROM "items" WHERE (category like '%Tool%')
 => 46477`
 
-#7) How much was spent on books?
+#7) How many total items did we sell? (Note: The simulation was added before this was completed!)
+
+`[24] pry(main)> Order.sum(:quantity)
+   (0.3ms)  SELECT SUM("orders"."quantity") FROM "orders"
+=> 2130`
+
+#8) How much was spent on books?
 
 
 `[18] pry(main)> spent = Item.where('category like ?', '%Book%').collect do |item|
@@ -64,7 +70,7 @@
 `[19] pry(main)> spent.inject(0, :+)
 => 1081352`
 
-#8) Simulate buying an item by inserting a User for yourself and an Order for that User.
+#9) Simulate buying an item by inserting a User for yourself and an Order for that User.
 
 
 `[20] pry(main)> User.create(first_name: "Zachary", last_name: "Pinner", email: "zapinner@gmail.com")
