@@ -1,4 +1,4 @@
-<%= link_to "Create a new item", new_path %>
+<%= button_to "Create a new item", new_path, method: :get %>
 <table class="table table-inverse">
 
     <thead>
@@ -27,7 +27,7 @@
             <%end%>
             <%end%>
             <td>
-              <%= link_to "Edit this item", edit_item_path(:id => item.id) %>
+              <%= button_to "Edit this item", edit_item_path(:id => item.id), method: :get%>
             </td>
         </tr>
         <%end%>
