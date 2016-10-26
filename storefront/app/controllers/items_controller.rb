@@ -1,29 +1,46 @@
 class ItemsController < ApplicationController
 
-def index
-  @colums = Item.column_names
-  @items = Item.joins(:orders).group(:id).order('orders.quantity DESC')
-end
+before_action :find_item, only: [:edit, :update, :show]
 
-def create
-  # @item = Item.all
-  # @item.title = params[:title]
-  # @item.description = params[:item][:description]
-  # @item.category = params[:item][:category]
-  # @item.price = params[:item][:price]
-  # @item.total = params[:item][:total]
+  def index
+    @colums = Item.column_names
+    @items = Item.left_joins(:orders).group(:id).order('orders.quantity DESC')
+  end
 
-  # @item.save
-  # redirect_to root_path\
-end
+  def create
+    @item = Item.new
+    @item.title = params[:item][:title]
+    @item.description = params[:item][:description]
+    @item.category = params[:item][:category]
+    @item.price = params[:item][:price]
+
+    @item.save
+    redirect_to root_path
+  end
+
+  def edit
+    render :new
+  end
 
   def show
   end
 
-  def new
+  def update
+    @item.title = params[:item][:title]
+    @item.description = params[:item][:description]
+    @item.category = params[:item][:category]
+    @item.price = params[:item][:price]
+
+    @item.save
+    redirect_to root_path(id: @item.id)
   end
 
+  def new
+    @items = Item.new
+  end
 
-
+  def find_item
+    @item = Item.find(params[:id])
+  end
 
 end

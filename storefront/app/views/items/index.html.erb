@@ -1,3 +1,4 @@
+<%= link_to "Create a new item", new_path %>
 <table class="table table-inverse">
 
     <thead>
@@ -13,11 +14,21 @@
     <tbody>
         <% @items.each do |item| %>
         <tr>
-            <% item.attributes.values.each do |value| %>
+            <% item.attributes.each do |k,v| %>
+            <% if k == 'price' %>
+
             <td>
-                <%= value %>
+                <%= number_to_currency(item.price.to_i/100.00) %>
+            </td>
+            <%else%>
+            <td>
+                <%= v %>
             </td>
             <%end%>
+            <%end%>
+            <td>
+              <%= link_to "Edit this item", edit_item_path(:id => item.id) %>
+            </td>
         </tr>
         <%end%>
     </tbody>

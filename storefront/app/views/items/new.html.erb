@@ -1,0 +1,15 @@
+<%= bootstrap_form_for @item do |f| %>
+  <div>
+    <%= f.text_field :title %>
+  </div>
+  <div>
+    <%= f.text_field :description %>
+  </div>
+  <div>
+    <%= f.text_area :category%>
+  </div>
+  <div>
+    <%= f.text_field :price, prepend: "$", append: ".00" %>
+  </div>
+  <%= f.submit %>
+<% end %>
