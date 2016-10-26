@@ -36,7 +36,7 @@ before_action :find_item, only: [:edit, :update, :show]
   end
 
   def new
-    @items = Item.new
+    @item = Item.new
   end
 
   def find_item
